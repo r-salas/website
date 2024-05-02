@@ -7,14 +7,17 @@ import './index.css'
 import {messages as enMessages} from "./locales/en"
 import {messages as esMessages} from "./locales/es"
 import {detect, fromNavigator} from "@lingui/detect-locale";
+import {normalizeLocale} from "./utils.ts";
 
 i18n.load({
     en: enMessages,
     es: esMessages,
 })
 
-const browserLocale = detect(fromNavigator(), "en")
-i18n.activate(browserLocale || "en")
+const defaultLocale = "en"
+const browserLocale = detect(fromNavigator(), defaultLocale) || defaultLocale
+const normalizedLocale = normalizeLocale(browserLocale)
+i18n.activate(normalizedLocale)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
