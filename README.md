@@ -21,6 +21,8 @@ $ npm run dev
 ```
 
 ### Localization
+This project uses [lingui.js](https://lingui.js.org/) for localization.
+
 1. Everytime you add a new string to the code, run the following script to update the translation files:
 ```console
 $ npm run locale:extract
