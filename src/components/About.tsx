@@ -11,14 +11,18 @@ import phoneImg from "../assets/phone.png"
 import websiteImg from "../assets/website.png"
 import downloadImg from "../assets/download.png"
 import classes from "./About.module.css"
+import {Trans} from "@lingui/macro"
+import {useLingui} from "@lingui/react"
 
 
 function About() {
+    const { i18n } = useLingui()
+
     return (
         <div className={classes.wrapper}>
             <img src={meImg} alt="Me" className={classes.img}/>
-            <h1 className={classes.title}>Hello, I'm Rubén Salas</h1>
-            <p className={classes.description}>Machine Learning Engineer <br/>specializing in crafting conversational assistants <br/>to enhance user experiences.</p>
+            <h1 className={classes.title}><Trans>Hello, I'm Rubén Salas</Trans></h1>
+            <p className={classes.description}><Trans>Machine Learning Engineer <br/>specializing in crafting conversational assistants <br/>to enhance user experiences.</Trans></p>
 
             <div className={classes.socials}>
                 <div className={classes.social}>
@@ -38,9 +42,9 @@ function About() {
                     <a className={classes.socialLink} href="https://rubensalas.ai">rubensalas.ai</a>
                 </div>
             </div>
-            <a href={import.meta.env.VITE_API_URL + "/static/Resume - EN.pdf"} className={classes.downloadResumeButton} target="_blank">
+            <a href={import.meta.env.VITE_API_URL + `/static/Resume - ${i18n.locale.toUpperCase()}.pdf`} className={classes.downloadResumeButton} target="_blank">
                 <img src={downloadImg} alt="Download"/>
-                Resume
+                <Trans>Resume</Trans>
             </a>
         </div>
     )

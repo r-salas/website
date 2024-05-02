@@ -1,0 +1,94 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-05-02 19:31+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: es\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/Chat.tsx:238
+msgid "Contact"
+msgstr "Contacto"
+
+#: src/components/Chat.tsx:222
+msgid "Experience"
+msgstr "Experiencia"
+
+#: src/components/About.tsx:24
+msgid "Hello, I'm Rubén Salas"
+msgstr "Hola, soy Rubén Salas"
+
+#: src/components/Chat.tsx:52
+msgid ""
+"Hello! I am Rubén Salas' AI assistant. I can provide information about Rubén's professional life, including his skills, projects, work experience, educational background, and languages.\n"
+"Feel free to ask any questions related to these topics!"
+msgstr ""
+"Hola! Soy el asistente virtual de Rubén Salas. Puedo proporcionar información sobre la vida profesional de Rubén, incluyendo sus habilidades, proyectos, experiencia laboral, formación académica e idiomas.\n"
+"¡Siéntete libre de hacer cualquier pregunta relacionada con estos temas!"
+
+#: src/components/Chat.tsx:45
+#~ msgid "Hello! I am Rubén Salas' AI assistant. I can provide information about Rubén's professional life, including his skills, projects, work experience, educational background, and languages.<0/>Feel free to ask any questions related to these topics!"
+#~ msgstr "¡Hola! Soy el asistente virtual de Rubén Salas. Puedo proporcionar información sobre la vida profesional de Rubén, incluyendo sus habilidades, proyectos, experiencia laboral, formación académica e idiomas.<0/>¡Siéntete libre de hacer cualquier pregunta relacionada con estos temas!"
+
+#: src/components/Chat.tsx:182
+msgid "How can I contact you?"
+msgstr "¿Cómo puedo contactarte?"
+
+#: src/components/Chat.tsx:217
+msgid "Learn about educational background"
+msgstr "Descubre mi formación académica"
+
+#: src/components/Chat.tsx:233
+msgid "Learn about technical skills"
+msgstr "Descubre mis habilidades técnicas"
+
+#: src/components/Chat.tsx:225
+msgid "Learn about work experience"
+msgstr "Descubre mi experiencia laboral"
+
+#: src/components/Chat.tsx:241
+msgid "Learn how you can contact me"
+msgstr "Descubre cómo puedes contactarme"
+
+#: src/components/About.tsx:25
+msgid "Machine Learning Engineer <0/>specializing in crafting conversational assistants <1/>to enhance user experiences."
+msgstr "Ingeniero de Machine Learning <0/>especializado en la creación de asistentes conversacionales <1/>para mejorar la experiencia de usuario."
+
+#: src/components/About.tsx:47
+msgid "Resume"
+msgstr "Currículum"
+
+#: src/components/Chat.tsx:230
+msgid "Skills"
+msgstr "Habilidades"
+
+#: src/components/Chat.tsx:246
+msgid "Start typing ..."
+msgstr "Escribe aquí ..."
+
+#: src/components/Chat.tsx:214
+msgid "Studies"
+msgstr "Formación académica"
+
+#: src/components/Chat.tsx:178
+msgid "What are your skills?"
+msgstr "¿Qué habilidades tienes?"
+
+#: src/components/Chat.tsx:170
+msgid "What are your studies?"
+msgstr "¿Cuál es tu formación académica?"
+
+#: src/components/Chat.tsx:174
+msgid "What is your work experience?"
+msgstr "¿Cuál es tu experiencia laboral?"
+
+#: src/components/Chat.tsx:192
+msgid "You"
+msgstr "Tú"

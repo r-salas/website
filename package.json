@@ -7,14 +7,22 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "locale:extract": "lingui extract",
+    "locale:compile": "lingui compile --typescript"
   },
   "dependencies": {
+    "@lingui/detect-locale": "^4.10.0",
+    "@lingui/macro": "^4.10.0",
+    "@lingui/react": "^4.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1"
   },
   "devDependencies": {
+    "@lingui/cli": "^4.10.0",
+    "@lingui/swc-plugin": "^4.0.7",
+    "@lingui/vite-plugin": "^4.10.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

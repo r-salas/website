@@ -6,12 +6,13 @@
 
 import classes from './Chat.module.css'
 import sendImg from '../assets/send.png'
-import React, {useEffect, useRef, useState} from "react";
-import {Message as MessageInterface} from "../interfaces.ts";
-import MeAvatar from "./MeAvatar.tsx";
-import UserAvatar from "./UserAvatar.tsx";
-import Message from './Message.tsx';
-import downArrowImg from "../assets/down-arrow.png";
+import React, {useEffect, useRef, useState} from "react"
+import {Message as MessageInterface} from "../interfaces.ts"
+import MeAvatar from "./MeAvatar.tsx"
+import UserAvatar from "./UserAvatar.tsx"
+import Message from './Message.tsx'
+import downArrowImg from "../assets/down-arrow.png"
+import {t, Trans} from "@lingui/macro"
 
 
 async function* createChatCompletion(messages: MessageInterface[]) {
@@ -41,17 +42,24 @@ async function* createChatCompletion(messages: MessageInterface[]) {
     }
 }
 
-const INITIAL_MESSAGE = `
-    Hello! I am Rubén Salas' AI assistant. I can provide information about Rubén's professional life, including his skills, projects, work experience, educational background, and languages. 
-    Feel free to ask any questions related to these topics!
-`.trimStart()
-
-
 function Chat() {
     const messagesEndRef = useRef<null | HTMLLIElement>(null)
     const messagesContainerRef = useRef<null | HTMLUListElement>(null)
     const [scrollButtonVisible, setScrollButtonVisible] = useState(false)
-    const [messages, setMessages]  = useState<MessageInterface[]>([{"role": "assistant", "content": INITIAL_MESSAGE}])
+    const [messages, setMessages]  = useState<MessageInterface[]>([])
+
+    useEffect(() => {
+        const initialMessage =  t`
+            Hello! I am Rubén Salas' AI assistant. I can provide information about Rubén's professional life, including his skills, projects, work experience, educational background, and languages.
+            Feel free to ask any questions related to these topics!
+        `
+        setMessages([
+            {
+                "role": "assistant",
+                "content": initialMessage
+            }
+        ])
+    }, [])
 
     useEffect(() => {
        // Hide the scroll button when the user scrolls to the bottom
@@ -135,10 +143,7 @@ function Chat() {
         }
 
         const newMessages = [
-            {
-                "role": "assistant",
-                "content": INITIAL_MESSAGE
-            },
+            ...messages,
             {
                 "role": "user",
                 "content": shortcutMessage
@@ -162,19 +167,19 @@ function Chat() {
     }
 
     function onStudiesShortcut() {
-        onShortCut("What are your studies?").catch(console.error)
+        onShortCut(t`What are your studies?`).catch(console.error)
     }
 
     function onExperienceShortcut() {
-        onShortCut("What is your work experience?").catch(console.error)
+        onShortCut(t`What is your work experience?`).catch(console.error)
     }
 
     function onSkillsShortcut() {
-        onShortCut("What are your skills?").catch(console.error)
+        onShortCut(t`What are your skills?`).catch(console.error)
     }
 
     function onContactShortcut() {
-        onShortCut("How can I contact you?").catch(console.error)
+        onShortCut(t`How can I contact you?`).catch(console.error)
     }
 
     return (
@@ -184,7 +189,7 @@ function Chat() {
                     const messageNodeByRole: Record<string, React.ReactNode> = {
                         "assistant": <Message name="Rubén Salas" message={message.content}
                                               avatar={<MeAvatar size={30}/>}/>,
-                        "user": <Message name="You" message={message.content} avatar={<UserAvatar size={27}/>}/>,
+                        "user": <Message name={t`You`} message={message.content} avatar={<UserAvatar size={27}/>}/>,
                     }
                     const messageNode = messageNodeByRole[message.role]
 
@@ -206,39 +211,39 @@ function Chat() {
                 {messages.length < 2 && <div className={classes.shortcuts}>
                     <button type="button" onClick={onStudiesShortcut} className={classes.shortcutButton}>
                         <span className={classes.shortcutButtonTitle}>
-                            Studies
+                            <Trans>Studies</Trans>
                         </span>
                         <span className={classes.shortcutButtonDescription}>
-                            Learn about educational background
+                            <Trans>Learn about educational background</Trans>
                         </span>
                     </button>
                     <button type="button" onClick={onExperienceShortcut} className={classes.shortcutButton}>
                         <span className={classes.shortcutButtonTitle}>
-                            Experience
+                            <Trans>Experience</Trans>
                         </span>
                         <span className={classes.shortcutButtonDescription}>
-                            Learn about work experience
+                            <Trans>Learn about work experience</Trans>
                         </span>
                     </button>
                     <button type="button" onClick={onSkillsShortcut} className={classes.shortcutButton}>
                         <span className={classes.shortcutButtonTitle}>
-                            Skills
+                            <Trans>Skills</Trans>
                         </span>
                         <span className={classes.shortcutButtonDescription}>
-                            Learn about technical skills
+                            <Trans>Learn about technical skills</Trans>
                         </span>
                     </button>
                     <button type="button" onClick={onContactShortcut} className={classes.shortcutButton}>
                         <span className={classes.shortcutButtonTitle}>
-                            Contact
+                            <Trans>Contact</Trans>
                         </span>
                         <span className={classes.shortcutButtonDescription}>
-                            Learn how you can contact me
+                            <Trans>Learn how you can contact me</Trans>
                         </span>
                     </button>
                 </div>}
                 <form className={classes.form} onSubmit={onSubmit}>
-                    <input type="text" name="message" className={classes.input} placeholder="Start typing ..."/>
+                    <input type="text" name="message" className={classes.input} placeholder={t`Start typing ...`}/>
                     <button type="submit" className={classes.submit}>
                         <img className={classes.submitIcon} src={sendImg} alt="Send image"/>
                     </button>

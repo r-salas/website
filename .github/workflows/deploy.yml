@@ -18,6 +18,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build locale files
+        run: npm run locale:compile
+
       - name: Build dist files
         run: npm run build
 
