@@ -9,6 +9,7 @@ import emailImg from "../assets/email.png"
 import githubImg from "../assets/github.png"
 import phoneImg from "../assets/phone.png"
 import websiteImg from "../assets/website.png"
+import locationImg from "../assets/location.png"
 import downloadImg from "../assets/download.png"
 import classes from "./About.module.css"
 import {Trans} from "@lingui/macro"
@@ -41,8 +42,13 @@ function About() {
                     <img src={websiteImg} alt="Website" className={classes.socialIcon}/>
                     <a className={classes.socialLink} href="https://rubensalas.ai">rubensalas.ai</a>
                 </div>
+                <div className={classes.social}>
+                    <img src={locationImg} alt="Location" className={classes.socialIcon}/>
+                    <a className={classes.socialLink} href="https://maps.app.goo.gl/p92k96H7wKEgAjRr8">Madrid</a>
+                </div>
             </div>
-            <a href={import.meta.env.VITE_API_URL + `/static/Resume - ${i18n.locale.toUpperCase()}.pdf`} className={classes.downloadResumeButton} target="_blank">
+            <a href={import.meta.env.VITE_API_URL + `/static/Resume - ${i18n.locale.toUpperCase()}.pdf`}
+               className={classes.downloadResumeButton} target="_blank">
                 <img src={downloadImg} alt="Download"/>
                 <Trans>Resume</Trans>
             </a>
