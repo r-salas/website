@@ -1,0 +1,55 @@
+name: Terraform plan
+
+on:
+  pull_request:
+    paths:
+      - iac/**
+      - .github/workflows/terraform-plan.yml
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
+  TF_VAR_region: ${{ vars.GCP_REGION }}
+  TF_VAR_domain: ${{ vars.GCP_DOMAIN }}
+  TF_VAR_state_bucket: ${{ vars.TF_STATE_BUCKET }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        shell: bash
+        working-directory: iac
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.TF_PLAN_SA }}
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_wrapper: false
+
+      - run: terraform fmt -check -recursive
+
+      - run: terraform init -input=false -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
+
+      - run: terraform validate
+
+      # Read-only SA can't write the state lock
+      - run: terraform plan -input=false -lock=false -no-color | tee plan.txt
+
+      - if: always()
+        run: |
+          {
+            echo '### Terraform plan'
+            echo '```'
+            tail -c 60000 plan.txt 2>/dev/null || echo 'no plan output'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

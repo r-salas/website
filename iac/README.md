@@ -1,0 +1,48 @@
+# Infrastructure (GCP)
+
+Terraform for the website: Cloud Run service, Artifact Registry, and keyless
+GitHub Actions auth via Workload Identity Federation.
+
+## Bootstrap (once, locally)
+
+GitHub Actions can't authenticate until Terraform has created the identity
+federation, so the first apply is run by you:
+
+```console
+$ gcloud auth application-default login
+$ gcloud storage buckets create gs://rubensalas-website-tfstate --location=europe-west1 --uniform-bucket-level-access
+$ gcloud storage buckets update gs://rubensalas-website-tfstate --versioning
+$ cp terraform.tfvars.example terraform.tfvars   # edit values
+$ terraform init -backend-config="bucket=rubensalas-website-tfstate"
+$ terraform apply
+```
+
+Then copy `terraform output github_variables` into GitHub repository
+**variables** (Settings → Secrets and variables → Actions → Variables):
+
+```console
+$ terraform output -json github_variables | jq -r 'to_entries[] | "\(.key) \(.value)"' \
+    | while read k v; do gh variable set "$k" --body "$v"; done
+```
+
+## CI/CD
+
+| Workflow | Trigger | Service account | Does |
+|---|---|---|---|
+| `terraform-plan.yml` | PR touching `iac/**` | `terraform-plan` (read-only) | fmt, validate, plan (in job summary) |
+| `deploy.yml` → `infra` | push to `main` | `terraform` | `terraform apply` |
+| `deploy.yml` → `app` | after `infra` | `website-deployer` | build image, deploy to Cloud Run |
+
+Only `refs/heads/main` can impersonate the `terraform` and deployer service
+accounts. The `infra` job runs in the `production` environment — add required
+reviewers there (Settings → Environments) if you want manual approval of applies.
+
+Terraform ignores the Cloud Run image, so app deploys and infra applies don't conflict.
+
+## Custom domain
+
+If `domain` is set, verify ownership first (`gcloud domains verify rubensalas.ai`)
+and add the `terraform@<project>.iam.gserviceaccount.com` service account as an
+owner in [Search Console](https://search.google.com/search-console) so CI can
+manage the mapping. Then create the DNS records from
+`terraform output domain_dns_records`.

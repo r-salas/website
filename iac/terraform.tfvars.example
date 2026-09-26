@@ -1,0 +1,4 @@
+project_id = "my-gcp-project"
+region     = "europe-west1"
+domain     = "rubensalas.ai"
+state_bucket = "rubensalas-website-tfstate"

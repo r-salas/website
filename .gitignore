@@ -1,15 +1,11 @@
 # Logs
 logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+ui/npm-debug.log*
 
-node_modules
-dist
-dist-ssr
+ui/node_modules
+ui/dist
+
 *.local
 
 # Editor directories and files
@@ -17,12 +13,19 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 
-.vite
+ui/.vite
 
-src/locales/**/*.ts
+ui/src/locales/**/*.ts
+
+api/venv
+api/__pycache__
+
+iac/terraform.tfvars
+
+iac/.terraform/
+iac/*.tfstate
+iac/*.tfstate.*
+iac/*.tfvars
+!iac/*.tfvars.example
+iac/crash.log
