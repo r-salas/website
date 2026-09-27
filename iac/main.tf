@@ -1,5 +1,7 @@
 locals {
   services = [
+    "cloudresourcemanager.googleapis.com",
+    "serviceusage.googleapis.com",
     "run.googleapis.com",
     "artifactregistry.googleapis.com",
     "iam.googleapis.com",

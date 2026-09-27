@@ -10,6 +10,7 @@ federation, so the first apply is run by you:
 
 ```console
 $ gcloud auth application-default login
+$ gcloud services enable cloudresourcemanager.googleapis.com serviceusage.googleapis.com --project=<project-id>
 $ gcloud storage buckets create gs://rubensalas-website-tfstate --location=europe-west1 --uniform-bucket-level-access
 $ gcloud storage buckets update gs://rubensalas-website-tfstate --versioning
 $ cp terraform.tfvars.example terraform.tfvars   # edit values

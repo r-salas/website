@@ -73,7 +73,7 @@ jobs:
       - uses: docker/build-push-action@v7
         with:
           context: .
-          file: api/Dockerfile
+          file: Dockerfile
           push: true
           tags: |
             ${{ env.IMAGE }}:${{ github.sha }}
