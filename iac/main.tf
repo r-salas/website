@@ -47,6 +47,13 @@ resource "google_artifact_registry_repository" "docker" {
 
 # --- Secrets -------------------------------------------------------------------
 
+# IAM grants take a little time to propagate, so give it a
+# head start before the secret resources below rely on it.
+resource "time_sleep" "secretmanager_iam_propagation" {
+  create_duration = "60s"
+  depends_on      = [google_project_iam_member.terraform]
+}
+
 resource "google_secret_manager_secret" "openrouter_api_key" {
   secret_id = "${var.service_name}-openrouter-api-key"
 
@@ -54,7 +61,7 @@ resource "google_secret_manager_secret" "openrouter_api_key" {
     auto {}
   }
 
-  depends_on = [google_project_service.services]
+  depends_on = [google_project_service.services, time_sleep.secretmanager_iam_propagation]
 }
 
 # The key itself is supplied out-of-band (TF_VAR_openrouter_api_key / direnv), never committed.
