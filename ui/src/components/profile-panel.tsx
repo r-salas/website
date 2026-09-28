@@ -39,7 +39,7 @@ function ProfilePanel() {
 
             <div className="flex flex-col gap-2">
                 <a
-                    href={`${import.meta.env.VITE_API_URL}/Ruben_Salas_ML_Engineer_CV.pdf`}
+                    href={`${import.meta.env.VITE_API_URL}/cv`}
                     download
                     className={cn(buttonVariants(), 'w-full')}
                 >

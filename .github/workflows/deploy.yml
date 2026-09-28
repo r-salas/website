@@ -17,6 +17,7 @@ env:
   TF_VAR_region: ${{ vars.GCP_REGION }}
   TF_VAR_domain: ${{ vars.GCP_DOMAIN }}
   TF_VAR_state_bucket: ${{ vars.TF_STATE_BUCKET }}
+  TF_VAR_openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 
 jobs:
   infra:

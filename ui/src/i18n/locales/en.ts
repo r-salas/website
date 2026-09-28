@@ -25,7 +25,7 @@ const en = {
         subtitle: 'Ask my AI anything about my work, by voice or text',
         orType: 'or type a question',
         thinking: 'Thinking…',
-        pendingReply: "I'm not connected yet — the API is on its way. Check back soon!",
+        error: "Sorry, I couldn't reach the assistant. Please check your connection and try again.",
         voice: {
             speakNow: 'Speak now',
             end: 'End',

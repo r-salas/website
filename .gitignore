@@ -20,6 +20,7 @@ ui/src/locales/**/*.ts
 
 api/venv
 api/__pycache__
+.envrc
 
 iac/terraform.tfvars
 

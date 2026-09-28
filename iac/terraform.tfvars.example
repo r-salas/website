@@ -2,3 +2,6 @@ project_id = "my-gcp-project"
 region     = "europe-west1"
 domain     = "rubensalas.ai"
 state_bucket = "rubensalas-website-tfstate"
+
+# openrouter_api_key is sensitive: don't put it here. Export TF_VAR_openrouter_api_key
+# instead (e.g. via .envrc, gitignored) or set it as a CI secret — see README.

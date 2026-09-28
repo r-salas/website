@@ -27,7 +27,7 @@ const es: typeof en = {
         subtitle: 'Pregunta a mi IA sobre mi trabajo, por voz o por texto',
         orType: 'o escribe una pregunta',
         thinking: 'Pensando…',
-        pendingReply: 'Todavía no estoy conectado — la API está en camino. ¡Vuelve pronto!',
+        error: 'No he podido conectar con el asistente. Comprueba tu conexión e inténtalo de nuevo.',
         voice: {
             speakNow: 'Habla ahora',
             end: 'Terminar',

@@ -14,6 +14,7 @@ $ gcloud services enable cloudresourcemanager.googleapis.com serviceusage.google
 $ gcloud storage buckets create gs://rubensalas-website-tfstate --location=europe-west1 --uniform-bucket-level-access
 $ gcloud storage buckets update gs://rubensalas-website-tfstate --versioning
 $ cp terraform.tfvars.example terraform.tfvars   # edit values
+$ export TF_VAR_openrouter_api_key=...           # e.g. via .envrc (gitignored); never in tfvars
 $ terraform init -backend-config="bucket=rubensalas-website-tfstate"
 $ terraform apply
 ```
@@ -24,6 +25,14 @@ Then copy `terraform output github_variables` into GitHub repository
 ```console
 $ terraform output -json github_variables | jq -r 'to_entries[] | "\(.key) \(.value)"' \
     | while read k v; do gh variable set "$k" --body "$v"; done
+```
+
+Also add the OpenRouter key as a `production` **environment secret** (used by the `infra`
+job, which runs in that environment, to write the Secret Manager version that Cloud Run
+reads at runtime):
+
+```console
+$ gh secret set OPENROUTER_API_KEY --env production
 ```
 
 ## CI/CD

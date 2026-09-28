@@ -11,6 +11,7 @@ COPY api/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY api/main.py ./
 COPY api/public ./public
+COPY api/data ./data
 COPY --from=ui /ui/dist ./public
 EXPOSE 8000
 CMD ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8000"]

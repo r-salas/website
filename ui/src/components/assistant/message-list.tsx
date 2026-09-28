@@ -9,20 +9,26 @@ import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import avatarImage from '@/assets/avatar.jpg'
 import { Avatar, AvatarImage } from '@/components/shadcn/avatar'
+import Markdown from '@/components/assistant/markdown'
 import type { Message } from '@/hooks/use-assistant'
 
 
 function MessageList({ messages, isThinking }: { messages: Message[], isThinking: boolean }) {
     const { t } = useTranslation()
     const endRef = useRef<HTMLLIElement>(null)
+    // Streamed replies grow `content` in place without changing `messages.length`,
+    // so track total text length too or we'd only scroll once per message.
+    const contentLength = messages.reduce((total, message) => total + message.content.length, 0)
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-    }, [messages.length, isThinking])
+    }, [messages.length, contentLength, isThinking])
 
     return <ol aria-label={t('chat.title')} aria-live="polite" className="flex flex-col gap-4">
         {messages.map(message => <li key={message.id}>
-            <Bubble role={message.role}>{message.content}</Bubble>
+            <Bubble role={message.role}>
+                {message.role === 'assistant' ? <Markdown>{message.content}</Markdown> : message.content}
+            </Bubble>
         </li>)}
 
         {isThinking && <li>
@@ -51,9 +57,9 @@ function Bubble({ role, children }: { role: Message['role'], children: React.Rea
         </Avatar>}
 
         <div className={cn(
-            'max-w-[85%] rounded-2xl px-3.5 py-2 text-[0.9375rem] leading-relaxed whitespace-pre-wrap break-words sm:max-w-[75%]',
+            'max-w-[85%] rounded-2xl px-3.5 py-2 text-[0.9375rem] leading-relaxed break-words sm:max-w-[75%]',
             isUser
-                ? 'bg-primary text-primary-foreground rounded-br-md'
+                ? 'whitespace-pre-wrap bg-primary text-primary-foreground rounded-br-md'
                 : 'bg-muted rounded-bl-md',
         )}>
             {children}

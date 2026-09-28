@@ -7,6 +7,7 @@ locals {
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
     "sts.googleapis.com",
+    "secretmanager.googleapis.com",
   ]
 }
 
@@ -44,11 +45,36 @@ resource "google_artifact_registry_repository" "docker" {
   depends_on = [google_project_service.services]
 }
 
+# --- Secrets -------------------------------------------------------------------
+
+resource "google_secret_manager_secret" "openrouter_api_key" {
+  secret_id = "${var.service_name}-openrouter-api-key"
+
+  replication {
+    auto {}
+  }
+
+  depends_on = [google_project_service.services]
+}
+
+# The key itself is supplied out-of-band (TF_VAR_openrouter_api_key / direnv), never committed.
+resource "google_secret_manager_secret_version" "openrouter_api_key" {
+  count       = var.openrouter_api_key == "" ? 0 : 1
+  secret      = google_secret_manager_secret.openrouter_api_key.id
+  secret_data = var.openrouter_api_key
+}
+
 # --- Cloud Run ----------------------------------------------------------------
 
 resource "google_service_account" "runtime" {
   account_id   = "${var.service_name}-run"
   display_name = "Cloud Run runtime for ${var.service_name}"
+}
+
+resource "google_secret_manager_secret_iam_member" "runtime_openrouter_api_key" {
+  secret_id = google_secret_manager_secret.openrouter_api_key.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.runtime.email}"
 }
 
 resource "google_cloud_run_v2_service" "website" {
@@ -73,6 +99,17 @@ resource "google_cloud_run_v2_service" "website" {
         container_port = 8000
       }
 
+      env {
+        name = "OPENROUTER_API_KEY"
+
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.openrouter_api_key.secret_id
+            version = "latest"
+          }
+        }
+      }
+
       resources {
         limits = {
           cpu    = "1"
@@ -91,7 +128,11 @@ resource "google_cloud_run_v2_service" "website" {
     ]
   }
 
-  depends_on = [google_project_service.services]
+  depends_on = [
+    google_project_service.services,
+    google_secret_manager_secret_version.openrouter_api_key,
+    google_secret_manager_secret_iam_member.runtime_openrouter_api_key,
+  ]
 }
 
 resource "google_cloud_run_v2_service_iam_member" "public" {
