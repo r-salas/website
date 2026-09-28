@@ -4,13 +4,12 @@
 //
 //
 
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/shadcn/card'
 import { Button } from '@/components/shadcn/button'
 import VoiceHero from '@/components/assistant/voice-hero'
 import VoiceControl from '@/components/assistant/voice-control'
-import VoiceComingSoonDialog from '@/components/assistant/voice-coming-soon-dialog'
+import VoiceErrorDialog from '@/components/assistant/voice-error-dialog'
 import MessageList from '@/components/assistant/message-list'
 import Composer from '@/components/assistant/composer'
 import { useAssistant } from '@/hooks/use-assistant'
@@ -20,11 +19,10 @@ const suggestions = ['experience', 'voice', 'stack'] as const
 
 function ChatPanel() {
     const { t } = useTranslation()
-    const { messages, isThinking, sendMessage, voiceStatus, stopVoice } = useAssistant()
+    const {
+        messages, isThinking, sendMessage, voiceStatus, voiceError, startVoice, stopVoice, dismissVoiceError,
+    } = useAssistant()
     const hasConversation = messages.length > 0
-    // Voice mode has no backend yet — let visitors know instead of faking a connection.
-    const [voiceComingSoonOpen, setVoiceComingSoonOpen] = useState(false)
-    const promptVoice = () => setVoiceComingSoonOpen(true)
 
     return <Card className="flex h-[80svh] min-h-[560px] flex-col gap-0 overflow-hidden py-0 lg:h-full lg:min-h-0">
         <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b px-4">
@@ -33,17 +31,17 @@ function ChatPanel() {
                 <p className="text-muted-foreground truncate text-xs">{t('chat.subtitle')}</p>
             </div>
 
-            {hasConversation && <VoiceControl status={voiceStatus} onStart={promptVoice} onStop={stopVoice} />}
+            {hasConversation && <VoiceControl status={voiceStatus} onStart={startVoice} onStop={stopVoice} />}
         </header>
 
-        <VoiceComingSoonDialog open={voiceComingSoonOpen} onOpenChange={setVoiceComingSoonOpen} />
+        <VoiceErrorDialog error={voiceError} onDismiss={dismissVoiceError} />
 
         {hasConversation
             ? <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4">
                 <MessageList messages={messages} isThinking={isThinking} />
             </div>
             : <div className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto">
-                <VoiceHero status={voiceStatus} onStart={promptVoice} onStop={stopVoice} />
+                <VoiceHero status={voiceStatus} onStart={startVoice} onStop={stopVoice} />
 
                 <div className="flex w-full max-w-md flex-col items-center gap-3 px-6 pb-6">
                     <div className="text-muted-foreground flex w-full items-center gap-3 text-xs">

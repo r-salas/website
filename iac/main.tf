@@ -71,6 +71,23 @@ resource "google_secret_manager_secret_version" "openrouter_api_key" {
   secret_data = var.openrouter_api_key
 }
 
+resource "google_secret_manager_secret" "gemini_api_key" {
+  secret_id = "${var.service_name}-gemini-api-key"
+
+  replication {
+    auto {}
+  }
+
+  depends_on = [google_project_service.services, time_sleep.secretmanager_iam_propagation]
+}
+
+# Supplied out-of-band (TF_VAR_gemini_api_key / direnv), never committed.
+resource "google_secret_manager_secret_version" "gemini_api_key" {
+  count       = var.gemini_api_key == "" ? 0 : 1
+  secret      = google_secret_manager_secret.gemini_api_key.id
+  secret_data = var.gemini_api_key
+}
+
 # --- Cloud Run ----------------------------------------------------------------
 
 resource "google_service_account" "runtime" {
@@ -80,6 +97,12 @@ resource "google_service_account" "runtime" {
 
 resource "google_secret_manager_secret_iam_member" "runtime_openrouter_api_key" {
   secret_id = google_secret_manager_secret.openrouter_api_key.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.runtime.email}"
+}
+
+resource "google_secret_manager_secret_iam_member" "runtime_gemini_api_key" {
+  secret_id = google_secret_manager_secret.gemini_api_key.id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.runtime.email}"
 }
@@ -117,6 +140,17 @@ resource "google_cloud_run_v2_service" "website" {
         }
       }
 
+      env {
+        name = "GEMINI_API_KEY"
+
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.gemini_api_key.secret_id
+            version = "latest"
+          }
+        }
+      }
+
       resources {
         limits = {
           cpu    = "1"
@@ -139,6 +173,8 @@ resource "google_cloud_run_v2_service" "website" {
     google_project_service.services,
     google_secret_manager_secret_version.openrouter_api_key,
     google_secret_manager_secret_iam_member.runtime_openrouter_api_key,
+    google_secret_manager_secret_version.gemini_api_key,
+    google_secret_manager_secret_iam_member.runtime_gemini_api_key,
   ]
 }
 

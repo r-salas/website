@@ -15,6 +15,7 @@ $ gcloud storage buckets create gs://rubensalas-website-tfstate --location=europ
 $ gcloud storage buckets update gs://rubensalas-website-tfstate --versioning
 $ cp terraform.tfvars.example terraform.tfvars   # edit values
 $ export TF_VAR_openrouter_api_key=...           # e.g. via .envrc (gitignored); never in tfvars
+$ export TF_VAR_gemini_api_key=...
 $ terraform init -backend-config="bucket=rubensalas-website-tfstate"
 $ terraform apply
 ```
@@ -27,12 +28,13 @@ $ terraform output -json github_variables | jq -r 'to_entries[] | "\(.key) \(.va
     | while read k v; do gh variable set "$k" --body "$v"; done
 ```
 
-Also add the OpenRouter key as a `production` **environment secret** (used by the `infra`
+Also add the OpenRouter and Gemini keys as `production` **environment secrets** (used by the `infra`
 job, which runs in that environment, to write the Secret Manager version that Cloud Run
 reads at runtime):
 
 ```console
 $ gh secret set OPENROUTER_API_KEY --env production
+$ gh secret set GEMINI_API_KEY --env production
 ```
 
 ## CI/CD

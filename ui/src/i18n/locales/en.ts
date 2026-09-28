@@ -35,9 +35,15 @@ const en = {
                 listening: 'Listening…',
                 speaking: 'Speaking…',
             },
-            comingSoon: {
-                title: 'Voice mode is coming soon',
-                description: "I'm still wiring up the voice pipeline. For now, ask me anything by text!",
+            error: {
+                micDenied: {
+                    title: 'Microphone access needed',
+                    description: 'Allow microphone access in your browser to talk to my assistant, or ask me anything by text.',
+                },
+                unavailable: {
+                    title: 'Voice mode is unavailable',
+                    description: "I couldn't connect to the voice assistant. Please try again in a moment, or ask me anything by text.",
+                },
                 dismiss: 'Got it',
             },
         },

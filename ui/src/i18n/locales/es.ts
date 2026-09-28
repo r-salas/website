@@ -37,9 +37,15 @@ const es: typeof en = {
                 listening: 'Escuchando…',
                 speaking: 'Hablando…',
             },
-            comingSoon: {
-                title: 'El modo de voz llegará pronto',
-                description: 'Todavía estoy montando el pipeline de voz. ¡Por ahora, pregúntame lo que quieras por texto!',
+            error: {
+                micDenied: {
+                    title: 'Necesito acceso al micrófono',
+                    description: 'Permite el acceso al micrófono en tu navegador para hablar con mi asistente, o pregúntame lo que quieras por texto.',
+                },
+                unavailable: {
+                    title: 'El modo de voz no está disponible',
+                    description: 'No he podido conectar con el asistente de voz. Inténtalo de nuevo en un momento, o pregúntame lo que quieras por texto.',
+                },
                 dismiss: 'Entendido',
             },
         },

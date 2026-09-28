@@ -48,3 +48,10 @@ variable "openrouter_api_key" {
   sensitive   = true
   default     = ""
 }
+
+variable "gemini_api_key" {
+  description = "Gemini API key for the voice backend (mints Live API ephemeral tokens), stored in Secret Manager. Supply via TF_VAR_gemini_api_key (or .envrc locally), never in a committed tfvars file. Leave empty to skip creating a secret version (e.g. for read-only plans)."
+  type        = string
+  sensitive   = true
+  default     = ""
+}
