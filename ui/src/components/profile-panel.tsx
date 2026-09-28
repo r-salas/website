@@ -7,6 +7,7 @@
 import {cn} from "cn"
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, Download, Mail } from 'lucide-react'
+import avatarImage from '@/assets/avatar.jpg'
 import { GithubIcon, LinkedinIcon } from '@/components/brand-icons'
 import { Avatar, AvatarImage } from '@/components/shadcn/avatar'
 import { Button, buttonVariants } from '@/components/shadcn/button'
@@ -23,7 +24,7 @@ function ProfilePanel() {
         <CardContent className="flex flex-col gap-5 p-5 lg:min-h-0">
             <header className="flex items-center gap-4 lg:min-h-0 lg:flex-col lg:items-start">
                 <Avatar className="size-auto w-24 aspect-[1021/995] shrink-0 lg:aspect-auto lg:h-[292px] lg:min-h-40 lg:w-full lg:shrink rounded-lg after:rounded-lg">
-                    <AvatarImage src={`${import.meta.env.VITE_API_URL}/avatar.jpg`} alt="Rubén Salas" className="aspect-auto rounded-lg object-top" />
+                    <AvatarImage src={avatarImage} alt="Rubén Salas" className="aspect-auto rounded-lg object-top" />
                 </Avatar>
 
                 <div className="flex min-w-0 flex-col gap-1">

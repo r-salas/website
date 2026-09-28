@@ -7,6 +7,7 @@
 import { cn } from 'cn'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import avatarImage from '@/assets/avatar.jpg'
 import { Avatar, AvatarImage } from '@/components/shadcn/avatar'
 import type { Message } from '@/hooks/use-assistant'
 
@@ -46,7 +47,7 @@ function Bubble({ role, children }: { role: Message['role'], children: React.Rea
 
     return <div className={cn('flex items-end gap-2', isUser && 'justify-end')}>
         {!isUser && <Avatar className="size-7 shrink-0">
-            <AvatarImage src={`${import.meta.env.VITE_API_URL}/avatar.webp`} alt="" className="object-top" />
+            <AvatarImage src={avatarImage} alt="" className="object-top" />
         </Avatar>}
 
         <div className={cn(
