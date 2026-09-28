@@ -37,6 +37,11 @@ const es: typeof en = {
                 listening: 'Escuchando…',
                 speaking: 'Hablando…',
             },
+            comingSoon: {
+                title: 'El modo de voz llegará pronto',
+                description: 'Todavía estoy montando el pipeline de voz. ¡Por ahora, pregúntame lo que quieras por texto!',
+                dismiss: 'Entendido',
+            },
         },
         composer: {
             placeholder: 'Escribe al asistente…',

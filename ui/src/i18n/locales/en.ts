@@ -35,6 +35,11 @@ const en = {
                 listening: 'Listening…',
                 speaking: 'Speaking…',
             },
+            comingSoon: {
+                title: 'Voice mode is coming soon',
+                description: "I'm still wiring up the voice pipeline. For now, ask me anything by text!",
+                dismiss: 'Got it',
+            },
         },
         composer: {
             placeholder: 'Message the assistant…',
