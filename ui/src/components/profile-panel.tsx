@@ -8,7 +8,7 @@ import {cn} from "cn"
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, Download, Mail } from 'lucide-react'
 import avatarImage from '@/assets/avatar.jpg'
-import { GithubIcon, LinkedinIcon } from '@/components/brand-icons'
+import { GithubIcon } from '@/components/brand-icons'
 import { Avatar, AvatarImage } from '@/components/shadcn/avatar'
 import { Button, buttonVariants } from '@/components/shadcn/button'
 import { Card, CardContent } from '@/components/shadcn/card'
@@ -76,7 +76,6 @@ function ProfilePanel() {
             <div className="flex items-center justify-between">
                 <nav className="flex items-center gap-1">
                     <IconLink href="https://github.com/r-salas" label="GitHub"><GithubIcon /></IconLink>
-                    <IconLink href="https://linkedin.com/in/you" label="LinkedIn"><LinkedinIcon /></IconLink>
                 </nav>
                 <span className="text-muted-foreground text-xs">{t('profile.location')}</span>
             </div>
