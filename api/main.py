@@ -12,7 +12,6 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from chat import router as chat_router
-from config import settings
 from voice import router as voice_router
 
 
@@ -25,7 +24,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=[
+        "http://localhost:5173"
+    ],
     allow_methods=["POST"],
     allow_headers=["Content-Type"],
 )

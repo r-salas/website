@@ -1,9 +1,9 @@
 #
 #
-#   Voice
-#
-#
 #   Realtime voice over Rubén's CV, backed by the Gemini Live API.
+#
+#
+
 #
 #   The browser talks to Gemini directly over WebSockets; this endpoint only mints a short-lived,
 #   single-use ephemeral token with the whole session setup (model, prompt, voice…) locked in, so
@@ -18,7 +18,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from chat import CV_MARKDOWN_PATH, MAX_HISTORY_MESSAGES, ChatMessage
-from config import settings
+import settings
 
 AUTH_TOKENS_URL = "https://generativelanguage.googleapis.com/v1beta/auth_tokens"
 
@@ -87,7 +87,7 @@ def _system_instruction(messages: list[ChatMessage], language: str) -> str:
 @router.post("/voice/token")
 async def create_voice_token(request: VoiceTokenRequest) -> VoiceTokenResponse:
     now = datetime.now(UTC)
-    model = f"models/{settings.gemini_live_model}"
+    model = f"models/{settings.GEMINI_LIVE_MODEL}"
 
     # With no fieldMask, this setup fully replaces whatever the client sends on connect.
     body = {
@@ -99,7 +99,7 @@ async def create_voice_token(request: VoiceTokenRequest) -> VoiceTokenResponse:
             "generationConfig": {
                 "responseModalities": ["AUDIO"],
                 "speechConfig": {
-                    "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": settings.gemini_live_voice}},
+                    "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": settings.GEMINI_LIVE_VOICE}},
                 },
             },
             "systemInstruction": {"parts": [{"text": _system_instruction(request.messages, request.language)}]},
@@ -112,7 +112,7 @@ async def create_voice_token(request: VoiceTokenRequest) -> VoiceTokenResponse:
         async with httpx.AsyncClient(timeout=10) as client:
             response = await client.post(
                 AUTH_TOKENS_URL,
-                headers={"x-goog-api-key": settings.gemini_api_key},
+                headers={"x-goog-api-key": settings.GEMINI_API_KEY},
                 json=body,
             )
             response.raise_for_status()
