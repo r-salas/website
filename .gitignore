@@ -3,7 +3,7 @@ logs
 *.log
 ui/npm-debug.log*
 
-ui/node_modules
+node_modules
 ui/dist
 
 *.local
@@ -14,19 +14,21 @@ ui/dist
 .idea
 .DS_Store
 
-ui/.vite
+.vite
 
 ui/src/locales/**/*.ts
 
-api/venv
-api/__pycache__
+venv
+__pycache__
 .envrc
 
 iac/terraform.tfvars
 
-iac/.terraform/
-iac/*.tfstate
-iac/*.tfstate.*
-iac/*.tfvars
-!iac/*.tfvars.example
-iac/crash.log
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+
+api/settings/local.py
