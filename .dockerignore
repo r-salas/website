@@ -5,3 +5,5 @@
 **/.DS_Store
 .git
 .idea
+
+settings/local.py
