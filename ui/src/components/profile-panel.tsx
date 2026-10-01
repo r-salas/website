@@ -18,7 +18,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/shadcn/too
 
 
 function ProfilePanel() {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
+    const cvLanguage = i18n.resolvedLanguage === 'es' ? 'es' : 'en'
 
     return <Card className="gap-0 py-0 lg:sticky lg:top-0 lg:max-h-full">
         <CardContent className="flex flex-col gap-5 p-5 lg:min-h-0">
@@ -39,7 +40,7 @@ function ProfilePanel() {
 
             <div className="flex flex-col gap-2">
                 <a
-                    href={`${import.meta.env.VITE_API_URL}/cv`}
+                    href={`${import.meta.env.VITE_API_URL}/cv?lang=${cvLanguage}`}
                     download
                     className={cn(buttonVariants(), 'w-full')}
                 >
