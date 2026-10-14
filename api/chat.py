@@ -27,10 +27,6 @@ MAX_HISTORY_MESSAGES = 30
 openai_client = AsyncOpenAI(
     api_key=settings.OPENROUTER_API_KEY,
     base_url="https://openrouter.ai/api/v1",
-    default_headers={
-        "HTTP-Referer": settings.SITE_URL,
-        "X-Title": settings.SITE_TITLE,
-    },
 )
 
 SYSTEM_PROMPT = inspect.cleandoc("""
