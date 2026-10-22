@@ -2,7 +2,7 @@
 
 [ruben.sls@outlook.com](mailto:ruben.sls@outlook.com) · [+34 617 69 19 08](tel:+34617691908) · [rubensalas.ai](https://rubensalas.ai) · [github.com/r-salas](https://github.com/r-salas) · Madrid
 
-Ingeniero de ML especializado en sistemas conversacionales y de voz con LLMs en producción. 9 años construyendo asistentes multicanal (voz, WhatsApp, web) a escala, desde Aura en Telefónica hasta liderar la arquitectura técnica de una plataforma SaaS desde cero, hoy con +30 clientes de pago y un 70% de conversaciones resueltas sin intervención humana.
+Ingeniero de ML especializado en sistemas conversacionales y de voz con LLMs en producción. 9 años construyendo asistentes multicanal (voz, WhatsApp, web) a escala, desde Aura en Telefónica hasta liderar la arquitectura técnica de una plataforma SaaS desde cero, hoy con +50 clientes de pago y un 70% de conversaciones resueltas sin intervención humana.
 
 ## Experiencia
 
@@ -10,7 +10,7 @@ Ingeniero de ML especializado en sistemas conversacionales y de voz con LLMs en 
 
 Startup de IA conversacional en fase inicial (SaaS omnicanal para pymes y proyectos a medida para grandes cuentas). Entré como uno de los 2 primeros ingenieros y asumí la arquitectura técnica del producto.
 
-- Diseñé y construí desde cero el motor de asistentes con LLMs, hoy en producción con más de 30 clientes de pago sobre teléfono, WhatsApp Business API, web y redes sociales, con un 70% de conversaciones resueltas sin escalado a agente humano.
+- Diseñé y construí desde cero el motor de asistentes con LLMs, hoy en producción con más de 50 clientes de pago sobre teléfono, WhatsApp Business API, web y redes sociales, con un 70% de conversaciones resueltas sin escalado a agente humano.
 - Desarrollé los pipelines de voz (STT, LLM y TTS) sobre Deepgram, ElevenLabs y Twilio, optimizando coste y latencia con caché en tres capas, enrutado dinámico de modelos y failover multiproveedor.
 - Implementé function calling para que los asistentes ejecuten acciones reales: gestión de reservas con holds idempotentes, sincronización de calendarios e integraciones con sistemas de terceros.
 - Lideré asistentes Text-to-SQL sobre esquemas de +20 tablas para un fabricante global de vehículos industriales, un grupo audiovisual líder y una agencia con cuentas del IBEX 35, con RBAC y guardrails de validación de consultas.
